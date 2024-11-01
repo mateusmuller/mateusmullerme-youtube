@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  glauth:
+    image: glauth/glauth:v2.3.2
+    container_name: glauth2
+    volumes:
+      - ./config.cfg:/app/config/config.cfg
+    ports:
+      - 389:3893
