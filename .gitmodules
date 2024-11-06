@@ -1,0 +1,4 @@
+[submodule "kubernetes/02_kubernetes_production_ready/kubespray"]
+	path = kubernetes/02_kubernetes_production_ready/kubespray
+	url = https://github.com/kubernetes-sigs/kubespray.git
+	branch = release-2.26
