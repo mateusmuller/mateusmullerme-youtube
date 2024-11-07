@@ -9,9 +9,11 @@ pipeline {
         }
       }
       steps {
-        sh '''
-          ls -l
-        '''
+        dir('kubernetes/02_kubernetes_production_ready/terraform') {
+          sh '''
+            terraform init
+          '''
+        }
       }
     }
   }
