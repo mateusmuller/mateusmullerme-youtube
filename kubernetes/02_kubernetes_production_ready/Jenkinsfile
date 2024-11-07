@@ -1,4 +1,10 @@
 pipeline {
+  agent {
+    docker { 
+      image 'alpine'
+      args '--entrypoint=""'
+    }
+  }
   stages {
     stage('init') {
       agent {
