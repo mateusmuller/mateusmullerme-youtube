@@ -1,16 +1,10 @@
 pipeline {
-  agent {
-    docker { 
-      image 'alpine'
-      args '--entrypoint=""'
-    }
-  }
-
   stages {
     stage('init') {
       agent {
         docker {
           image 'hashicorp/terraform:1.9.8'
+          args '--entrypoint=""'
         }
       }
       steps {
