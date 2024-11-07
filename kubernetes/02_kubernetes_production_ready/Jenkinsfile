@@ -1,5 +1,9 @@
 pipeline {
   agent none
+  environment {
+    PM_API_TOKEN_ID = credentials('pm-api-token-id')
+    PM_API_TOKEN_SECRET = credentials('pm-api-token-secret')
+  }
   stages {
     stage('init') {
       agent {
@@ -11,7 +15,22 @@ pipeline {
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
           sh '''
-            terraform init
+            terraform init -no-color
+          '''
+        }
+      }
+    }
+    stage('plan') {
+      agent {
+        docker {
+          image 'hashicorp/terraform:1.9.8'
+          args '--entrypoint=""'
+        }
+      }
+      steps {
+        dir('kubernetes/02_kubernetes_production_ready/terraform') {
+          sh '''
+            terraform plan
           '''
         }
       }
