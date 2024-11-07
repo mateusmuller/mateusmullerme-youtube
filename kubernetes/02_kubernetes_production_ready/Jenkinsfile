@@ -1,15 +1,23 @@
 pipeline {
-    agent {
-      docker { 
-        image 'alpine' 
+  agent {
+    docker { 
+      image 'alpine'
+      args '--entrypoint=""'
+    }
+  }
+
+  stages {
+    stage('init') {
+      agent {
+        docker {
+          image 'hashicorp/terraform:1.9.8'
+        }
+      }
+      steps {
+        sh '''
+          env
+        '''
       }
     }
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-    }
+  }
 }
