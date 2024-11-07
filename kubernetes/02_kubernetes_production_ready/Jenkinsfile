@@ -10,7 +10,7 @@ pipeline {
       }
       steps {
         sh '''
-          env
+          ls -l
         '''
       }
     }
