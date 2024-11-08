@@ -90,7 +90,7 @@ pipeline {
       agent {
         docker {
           image 'quay.io/kubespray/kubespray:v2.26.0'
-          args '--entrypoint=""'
+          args '--entrypoint="" -u root'
         }
       }
       steps {
