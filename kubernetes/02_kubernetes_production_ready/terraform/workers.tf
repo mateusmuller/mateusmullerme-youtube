@@ -58,4 +58,20 @@ resource "proxmox_vm_qemu" "workers" {
   }
 
   tags = local.workers.tags
+
+  connection {
+    type        = "ssh"
+    user        = local.cloud_init.user
+    private_key = file("id_rsa")
+    host = cidrhost(
+      local.cidr,
+      local.workers.network_last_octect + count.index
+    )
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait"
+    ]
+  }
 }
