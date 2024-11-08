@@ -86,6 +86,24 @@ pipeline {
         }
       }
     }
+    stage('kubespray') {
+      agent {
+        docker {
+          image 'quay.io/kubespray/kubespray:v2.26.0'
+          args '--entrypoint=""'
+        }
+      }
+      steps {
+        sh '''
+          ansible-playbook -i inventory.ini --private-key id_rsa cluster.yml
+        '''
+      }
+      when {
+        expression {
+          params.CREATE_OR_DESTROY == "Create"
+        }
+      }
+    }
     stage('destroy') {
       agent {
         docker {
@@ -109,12 +127,7 @@ pipeline {
   }
   post {
     always {
-        cleanWs(
-          cleanWhenNotBuilt: false,
-          deleteDirs: true,
-          disableDeferredWipeout: true,
-          notFailBuild: true
-        )
+      cleanWs()
     }
   }
 }
