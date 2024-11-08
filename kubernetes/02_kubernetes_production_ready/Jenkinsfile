@@ -3,7 +3,6 @@ pipeline {
   environment {
     PM_API_TOKEN_ID = credentials('pm-api-token-id')
     PM_API_TOKEN_SECRET = credentials('pm-api-token-secret')
-    MATEUS_PUBLIC_KEY = credentials('mateus-public-key')
   }
   stages {
     stage('init') {
@@ -30,10 +29,12 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          sh '''
-            echo "$MATEUS_PUBLIC_KEY" > id_rsa.pub
-            terraform plan -no-color
-          '''
+          withCredentials([string(credentialsId: 'mateus-public-key', variable: 'MATEUS_PUBLIC_KEY')]) {
+            sh '''
+              echo "$MATEUS_PUBLIC_KEY" > id_rsa.pub
+              terraform plan -no-color
+            '''
+          }
         }
       }
     }
