@@ -100,6 +100,7 @@ pipeline {
             export ANSIBLE_HOST_KEY_CHECKING="False"
             
             ansible-playbook \
+              --become \
               --inventory inventory.ini \
               --private-key id_rsa \
               /kubespray/cluster.yml
