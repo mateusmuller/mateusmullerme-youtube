@@ -107,4 +107,12 @@ pipeline {
       }
     }
   }
+  post { 
+    always { 
+      sh '''
+        rm -rf .terraform*
+        rm -f id_rsa*
+      '''
+    }
+  }
 }
