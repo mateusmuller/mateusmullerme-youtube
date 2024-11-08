@@ -20,11 +20,14 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          sh '''
-            echo "$MATEUS_PUBLIC_KEY" > id_rsa.pub
-            cp "$MATEUS_PRIVATE_KEY" id_rsa
-            chmod 400 id_rsa
-          '''
+          withCredentials([sshUserPrivateKey(credentialsId: 'mateus-private-key', keyFileVariable: 'MATEUS_PRIVATE_KEY')]) {
+            sh '''
+              ls -l
+              echo "$MATEUS_PUBLIC_KEY" > id_rsa.pub
+              cp "$MATEUS_PRIVATE_KEY" id_rsa
+              chmod 400 id_rsa
+            '''
+          }
         }
       }
     }
@@ -52,11 +55,9 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          withCredentials([sshUserPrivateKey(credentialsId: 'mateus-private-key', keyFileVariable: 'MATEUS_PRIVATE_KEY')]) {
-            sh '''
-              terraform plan -no-color
-            '''
-          }
+          sh '''
+            terraform plan -no-color
+          '''
         }
       }
       when {
@@ -74,11 +75,9 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          withCredentials([sshUserPrivateKey(credentialsId: 'mateus-private-key', keyFileVariable: 'MATEUS_PRIVATE_KEY')]) {
-            sh '''
-              terraform apply -no-color -auto-approve
-            '''
-          }
+          sh '''
+            terraform apply -no-color -auto-approve
+          '''
         }
       }
       when {
@@ -96,11 +95,9 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          withCredentials([sshUserPrivateKey(credentialsId: 'mateus-private-key', keyFileVariable: 'MATEUS_PRIVATE_KEY')]) {
-            sh '''
-              terraform apply -no-color -auto-approve -destroy
-            '''
-          }
+          sh '''
+            terraform apply -no-color -auto-approve -destroy
+          '''
         }
       }
       when {
