@@ -31,7 +31,7 @@ pipeline {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
           withCredentials([string(credentialsId: 'mateus-public-key', variable: 'MATEUS_PUBLIC_KEY')]) {
             sh '''
-              echo "$MATEUS_PUBLIC_KEY" > id_rsa.pub
+              cp "$MATEUS_PUBLIC_KEY" id_rsa.pub
               terraform plan -no-color
             '''
           }
