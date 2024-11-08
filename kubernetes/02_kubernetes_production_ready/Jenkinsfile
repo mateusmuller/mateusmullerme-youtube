@@ -95,7 +95,7 @@ pipeline {
       }
       steps {
         sh '''
-          ansible-playbook -i inventory.ini --private-key id_rsa cluster.yml
+          sleep infinity
         '''
       }
       when {
