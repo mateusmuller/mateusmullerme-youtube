@@ -103,6 +103,7 @@ pipeline {
               --become \
               --inventory inventory.ini \
               --private-key id_rsa \
+              --extra-vars "kube_network_plugin=flannel" \
               /kubespray/cluster.yml
           '''
         }
