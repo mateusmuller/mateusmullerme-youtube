@@ -58,4 +58,20 @@ resource "proxmox_vm_qemu" "masters" {
   }
 
   tags = local.masters.tags
+
+  connection {
+    type        = "ssh"
+    user        = local.cloud_init.user
+    private_key = file("/home/mateus/.ssh/id_rsa")
+    host = cidrhost(
+      local.cidr,
+      local.masters.network_last_octect + count.index
+    )
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait"
+    ]
+  }
 }
