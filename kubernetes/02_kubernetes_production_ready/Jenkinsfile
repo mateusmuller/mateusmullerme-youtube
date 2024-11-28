@@ -62,7 +62,9 @@ pipeline {
         }
       }
       when {
-        params.CREATE_OR_DESTROY == "Create"
+        expression {
+          params.CREATE_OR_DESTROY == "Create"
+        }
       }
     }
     stage('apply') {
@@ -80,7 +82,9 @@ pipeline {
         }
       }
       when {
-        params.CREATE_OR_DESTROY == "Create"
+        expression {
+          params.CREATE_OR_DESTROY == "Create"
+        }
       }
     }
     stage('destroy') {
@@ -98,7 +102,9 @@ pipeline {
         }
       }
       when {
-        params.CREATE_OR_DESTROY == "Destroy"
+        expression {
+          params.CREATE_OR_DESTROY == "Destroy"
+        }
       }
     }
   }
