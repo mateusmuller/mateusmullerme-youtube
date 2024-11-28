@@ -37,7 +37,7 @@ locals {
   cloud_init = {
     user           = "ubuntu"
     password       = "ubuntu"
-    ssh_public_key = file("/home/mateus/.ssh/id_rsa.pub")
+    ssh_public_key = file("id_rsa.pub")
   }
 
   # master specific configuration
