@@ -16,10 +16,12 @@ pipeline {
       }
       steps {
         dir('kubernetes/02_kubernetes_production_ready/terraform') {
-          sh '''
-            cp "$JENKINS_PRIV_KEY" id_rsa
-            echo "$JENKINS_PUB_KEY" > id_rsa.pub
-          '''
+          withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-priv-key', keyFileVariable: 'JENKINS_PRIV_KEY')]) {
+            sh '''
+              cp "$JENKINS_PRIV_KEY" id_rsa
+              echo "$JENKINS_PUB_KEY" > id_rsa.pub
+            '''
+          }
         }
       }
     }
