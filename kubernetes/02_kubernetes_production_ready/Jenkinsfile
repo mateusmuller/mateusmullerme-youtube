@@ -1,13 +1,19 @@
 pipeline {
-  agent {
-    docker { 
-      image 'alpine' 
-    }
-  }
+  agent any
   stages {
-    stage('Hello') {
+    stage('init') {
+      agent {
+        docker {
+          image 'hashicorp/terraform:1.9.8'
+          args '--entrypoint=""'
+        }
+      }
       steps {
-        echo 'Hello World'
+        dir('kubernetes/02_kubernetes_production_ready/terraform') {
+          sh '''
+            terraform init -no-color
+          '''
+        }
       }
     }
   }
