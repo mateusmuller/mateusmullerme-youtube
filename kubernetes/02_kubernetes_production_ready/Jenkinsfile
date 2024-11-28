@@ -22,5 +22,20 @@ pipeline {
         }
       }
     }
+    stage('plan') {
+      agent {
+        docker {
+          image 'hashicorp/terraform:1.9.8'
+          args '--entrypoint=""'
+        }
+      }
+      steps {
+        dir('kubernetes/02_kubernetes_production_ready/terraform') {
+          sh '''
+            terraform plan -no-color
+          '''
+        }
+      }
+    }
   }
 }
