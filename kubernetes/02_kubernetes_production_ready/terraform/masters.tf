@@ -29,6 +29,7 @@ resource "proxmox_vm_qemu" "masters" {
   )
 
   network {
+    id     = 0
     bridge = local.bridge.interface
     model  = local.bridge.model
   }
@@ -55,6 +56,7 @@ resource "proxmox_vm_qemu" "masters" {
     storage = local.disks.main.storage
     size    = local.masters.disk_size
     slot    = local.disks.main.slot
+    discard = local.disks.main.discard
   }
 
   tags = local.masters.tags

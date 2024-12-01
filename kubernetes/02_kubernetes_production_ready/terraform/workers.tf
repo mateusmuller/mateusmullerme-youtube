@@ -29,6 +29,7 @@ resource "proxmox_vm_qemu" "workers" {
   )
 
   network {
+    id     = 0
     bridge = local.bridge.interface
     model  = local.bridge.model
   }
@@ -55,6 +56,7 @@ resource "proxmox_vm_qemu" "workers" {
     storage = local.disks.main.storage
     size    = local.workers.disk_size
     slot    = local.disks.main.slot
+    discard = local.disks.main.discard
   }
 
   tags = local.workers.tags
