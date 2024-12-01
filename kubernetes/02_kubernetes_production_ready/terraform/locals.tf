@@ -19,7 +19,6 @@ locals {
       storage = "local-lvm"
       slot    = "scsi0"
       discard = true
-      cache   = "writeback"
     }
     cloudinit = {
       backup  = true
